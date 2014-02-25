@@ -12,6 +12,8 @@
     <services>
         <service id="snide_scrutinizer.scrutinizer_data_collector" class="%snide_scrutinizer.scrutinizer_data_collector.class%">
             <argument type="service" id ="snide_scrutinizer.client"/>
+            <argument type="service" id ="snide_scrutinizer.repository"/>
+            <argument type="service" id="snide_scrutinizer.cache" />
             <tag name="data_collector" template="SnideScrutinizerBundle:Collector:scrutinizer.html.twig" id="snide_scrutinizer" />
         </service>
 

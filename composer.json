@@ -15,7 +15,9 @@
         "phpunit/phpunit": "3.7.*"
     },
     "require": {
-        "snide/php-scrutinizer-client": "1.2.*",
+        "snide/php-scrutinizer-client": "dev-master",
+        "guzzle/cache": "3.*",
+        "guzzle/plugin": "3.*",
         "php": ">=5.3.3"
     },
     "autoload": {

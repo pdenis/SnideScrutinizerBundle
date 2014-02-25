@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="snide_scrutinizer.cache.class">Doctrine\Common\Cache\FilesystemCache</parameter>
+        <parameter key="snide_scrutinizer.cache_path">%kernel.cache_dir%/scrutinizer</parameter>
+    </parameters>
+
+    <services>
+        <service id="snide_scrutinizer.cache" class="%snide_scrutinizer.cache.class%">
+            <argument>%snide_scrutinizer.cache_path%</argument>
+        </service>
+    </services>
+</container>

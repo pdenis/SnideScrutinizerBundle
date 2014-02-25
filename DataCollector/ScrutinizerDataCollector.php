@@ -3,11 +3,16 @@
 
 namespace Snide\Bundle\ScrutinizerBundle\DataCollector;
 
+use Doctrine\Common\Cache\Cache;
 use Snide\Scrutinizer\Client;
+use Snide\Scrutinizer\Model\Repository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Guzzle\Http\Message\EntityEnclosingRequest;
+use Guzzle\Cache\DoctrineCacheAdapter;
+use Guzzle\Plugin\Cache\CachePlugin;
+use Guzzle\Plugin\Cache\DefaultCacheStorage;
 
 /**
  * Class ScrutinizerDataCollector
@@ -17,11 +22,28 @@ use Guzzle\Http\Message\EntityEnclosingRequest;
 class ScrutinizerDataCollector extends DataCollector
 {
     /**
+     * Client
+     *
+     * @var \Snide\Scrutinizer\Client
+     */
+    protected $client;
+
+    /**
+     * Repository
+     *
+     * @var \Snide\Scrutinizer\Model\Repository
+     */
+    protected $repository;
+
+    /**
      * Constructor
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, Repository $repository, Cache $cache)
     {
         $this->client = new Client();
+        $this->repository = $repository;
+
+        $this->loadCache($cache);
     }
 
     /**
@@ -31,7 +53,9 @@ class ScrutinizerDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $this->data = $this->client->fetchRepository('pdenis/memetor');
+        $this->data = $this->client->fetchRepository(
+            $this->repository
+        );
     }
 
     /**
@@ -48,5 +72,24 @@ class ScrutinizerDataCollector extends DataCollector
     public function getName()
     {
         return 'snide_scrutinizer';
+    }
+
+    /**
+     * Create and load client cache
+     *
+     * @param Cache $cache
+     */
+    protected function loadCache(Cache $cache)
+    {
+
+        $cachePlugin = new CachePlugin(array(
+            'storage' => new DefaultCacheStorage(
+                new DoctrineCacheAdapter(
+                    $cache
+                )
+            )
+        ));
+
+        $this->client->addSubscriber($cachePlugin);
     }
 }
