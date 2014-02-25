@@ -53,9 +53,11 @@ class ScrutinizerDataCollector extends DataCollector
      */
     public function collect(Request $request, Response $response, \Exception $exception = null)
     {
-        $this->data = $this->client->fetchRepository(
-            $this->repository
-        );
+        try {
+            $this->data = $this->client->fetchRepository(
+                $this->repository
+            );
+        } catch(\Exception $e) {}
     }
 
     /**

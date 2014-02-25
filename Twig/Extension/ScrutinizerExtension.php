@@ -11,9 +11,9 @@ class ScrutinizerExtension extends \Twig_Extension
 {
     const GREEN = 'green';
 
-    const LIGHT_GREEN = 'greenyellow';
+    const LIGHT_GREEN = 'yellow';
 
-    const YELLOW = 'yellow';
+    const YELLOW = 'silver';
 
     const RED = 'red';
 

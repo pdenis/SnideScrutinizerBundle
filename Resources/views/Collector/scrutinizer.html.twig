@@ -1,4 +1,10 @@
 {% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    <style>
+        {% include 'SnideScrutinizerBundle:Collector:profiler.css.twig' %}
+    </style>
+{% endblock %}
 
 {% block toolbar %}
     {% if collector.data %}
@@ -9,7 +15,7 @@
             {% set text %}
             <div class="sf-toolbar-info-piece">
                 <b>Quality</b>
-                <span class="sf-toolbar-status-{{ snide_scrutinizer_color(collector.data.metrics.quality) }}">{{ collector.data.metrics.quality }} / 10</span>
+                <span class="sf-toolbar-status-{{ snide_scrutinizer_color(collector.data.metrics.quality) }}">{{ collector.data.metrics.quality|number_format(2) }} / 10</span>
             </div>
             <div class="sf-toolbar-info-piece">
                 <b>Coverage</b>
@@ -22,21 +28,106 @@
 
 {% block menu %}
     <span class="label">
-    <span class="icon"><img width="32" height="32" alt="scrutinizer" src="data:image/png;base64,R0lGODlhIAAgAMZEAAREjgdHjwdHkAhHkAlHkQlIkQpJkQ1Lkg1Lkw5Mkw9NlBJOlBJOlRNPlBNPlRRQlhVQlhVRlhZSlxhTlxhTmBlUmBlVmBpVmB1WmR5WmiBZmiFZmyVcnCpgnyphn4iQk4iQlIiRlImRlImSlYqSlIqSlYuTlYuTloyTloyUl42Ul42Vl42VmI6VmI6WmY+WmZCXmpCYm5GYm5GZnJKZnJOZnZKanZOanZObnpSbnpadoJeeoJeeoZieoZifopqfoJuipZyipZyjpZ+lqP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEKAH8ALAAAAAAgACAAAAf+gH+Cg4SFhoeIgx0UAQMDBZCRkpOOG4gTAgIEk5ycAweIDY6dpJEDAhqHGAaPpaSnCogIra6eAg6IEKOQjpm+vwKnwR6JD7SOCRUXFszNFhcPGByJggu0BRnU2oQAjqPb4H8MEeQREuHo6eA/7O09PPDx8joqNtspHyH6+/z9IiIpTqSg9kJEiYMIEyo8+E/EiRqIaJwwuLBiwn8nErko8c+iR44uEsWY2PGjwn8yEuFIoYKjx4YUOb7YFmOFCBI4c5IwCIPFRRPqEp0MimgiQxBDiBoyWmKECCFKC7k8GGKbjhxB5snLMZVjRkQ+VDQMAbNsSYYzD8XoavJiiRsph1icbYvwXwu1TOkidIoCUUG9J08AQWTCrGHDcBPNuMG4sePHjXckCgQAOw=="/></span>
-    <strong>Scrutinizer</strong>
+        <span class="icon"><img width="32" height="32" alt="scrutinizer" src="data:image/png;base64,R0lGODlhIAAgAMZEAAREjgdHjwdHkAhHkAlHkQlIkQpJkQ1Lkg1Lkw5Mkw9NlBJOlBJOlRNPlBNPlRRQlhVQlhVRlhZSlxhTlxhTmBlUmBlVmBpVmB1WmR5WmiBZmiFZmyVcnCpgnyphn4iQk4iQlIiRlImRlImSlYqSlIqSlYuTlYuTloyTloyUl42Ul42Vl42VmI6VmI6WmY+WmZCXmpCYm5GYm5GZnJKZnJOZnZKanZOanZObnpSbnpadoJeeoJeeoZieoZifopqfoJuipZyipZyjpZ+lqP///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEKAH8ALAAAAAAgACAAAAf+gH+Cg4SFhoeIgx0UAQMDBZCRkpOOG4gTAgIEk5ycAweIDY6dpJEDAhqHGAaPpaSnCogIra6eAg6IEKOQjpm+vwKnwR6JD7SOCRUXFszNFhcPGByJggu0BRnU2oQAjqPb4H8MEeQREuHo6eA/7O09PPDx8joqNtspHyH6+/z9IiIpTqSg9kJEiYMIEyo8+E/EiRqIaJwwuLBiwn8nErko8c+iR44uEsWY2PGjwn8yEuFIoYKjx4YUOb7YFmOFCBI4c5IwCIPFRRPqEp0MimgiQxBDiBoyWmKECCFKC7k8GGKbjhxB5snLMZVjRkQ+VDQMAbNsSYYzD8XoavJiiRsph1icbYvwXwu1TOkidIoCUUG9J08AQWTCrGHDcBPNuMG4sePHjXckCgQAOw=="/></span>
+        <strong>Scrutinizer</strong>
     </span>
-
-</span>
 {% endblock %}
 
 {% block panel %}
-    <h2>Scrutinizer</h2>
+    <h2 class="scrutinizer-title">Scrutinizer - {{ collector.data.slug }} quality report</h2>
     {% if not collector.data %}
         <div>
             <h3>No data available</h3>
             The client could not connect to the web service. Maybe you are offline?
         </div>
     {% else %}
-        Hello world
+
+        <h3>General</h3>
+        <table id="scrutinizer_data">
+            <thead>
+                <tr><th>Name</th><th>Value</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Quality</td>
+                    <td>{{ collector.data.metrics.quality|number_format(2) }} / 10</td>
+                </tr>
+                <tr>
+                    <td>Coverage</td>
+                    <td>{{ collector.data.metrics.testCoverage|number_format(2) * 100}} %</td>
+                </tr>
+                <tr>
+                    <td>Issues</td>
+                    <td>{{ collector.data.metrics.nbIssues }} ( {{ collector.data.metrics.nbIgnoredIssues }} ignored )</td>
+                </tr>
+                {% if collector.data.pdependMetrics %}
+                    <tr>
+                        <td>Packages count</td>
+                        <td>{{ collector.data.pdependMetrics.numberOfPackages }}</td>
+                    </tr>
+                    <tr>
+                        <td>Classes count</td>
+                        <td>{{ collector.data.pdependMetrics.numberOfClasses }} ( {{ collector.data.pdependMetrics.numberOfConcreteClasses }} concrete(s) & {{ collector.data.pdependMetrics.numberOfAbstractClasses }} abstract(s) )</td>
+                    </tr>
+                    <tr>
+                        <td>Interfaces count</td>
+                        <td>{{ collector.data.pdependMetrics.numberOfInterfaces }}</td>
+                    </tr>
+                    <tr>
+                        <td>Methods count</td>
+                        <td>{{ collector.data.pdependMetrics.numberOfMethods }}</td>
+                    </tr>
+                    <tr>
+                        <td>Functions count</td>
+                        <td>{{ collector.data.pdependMetrics.numberOfFunctions }}</td>
+                    </tr>
+                    <tr>
+                        <td>Average number of derived class</td>
+                        <td>{{ collector.data.pdependMetrics.averageNumberOfDerivedClasses|number_format(2) * 100 }} %</td>
+                    </tr>
+                    <tr>
+                        <td>Average hierarchy height</td>
+                        <td>{{ collector.data.pdependMetrics.averageHierarchyHeight|number_format(2) * 100 }} %</td>
+                    </tr>
+                    <tr>
+                        <td>Calls count</td>
+                        <td>{{ collector.data.pdependMetrics.calls }}</td>
+                    </tr>
+                    <tr>
+                        <td>Cyclomatic complexity number</td>
+                        <td>{{ collector.data.pdependMetrics.cyclomaticComplexityNumber }}</td>
+                    </tr>
+                {% endif %}
+                {% if collector.data.coverageMetrics %}
+                    {% if collector.data.coverageMetrics.methods %}
+                        <tr>
+                            <td>Methods coverage</td>
+                            <td>{{ (collector.data.coverageMetrics.coveredMethods / collector.data.coverageMetrics.methods)|number_format(2) * 100 }} %</td>
+                        </tr>
+                    {% endif %}
+                    {% if collector.data.coverageMetrics.statements %}
+                        <tr>
+                            <td>Statements coverage</td>
+                            <td>{{ (collector.data.coverageMetrics.coveredStatements / collector.data.coverageMetrics.statements)|number_format(2) * 100 }} %</td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
+            </tbody>
+        </table>
+        <h3>General metrics</h3>
+        <div id="scrutinizer_metrics">
+            <div class="metrics" id="scrutinizer_class_metrics"></div>
+            <div class="metrics" id="scrutinizer_operation_metrics"></div>
+        </div>
+        <h3 class="clear-both">Pdepend metrics</h3>
+        <div id="scrutinizer_pdepend_metrics"></div>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="{{ asset('/bundles/snidescrutinizer/js/highcharts.js ') }}"></script>
+        <script src="{{ asset('/bundles/snidescrutinizer/js/theme.js ') }}"></script>
+        {% include "SnideScrutinizerBundle:Collector:metrics.html.twig" with {'metrics': collector.data.metrics} %}
+        {% include "SnideScrutinizerBundle:Collector:pdepend_metrics.html.twig" with {'metrics': collector.data.pdependMetrics} %}
+        {% include "SnideScrutinizerBundle:Collector:coverage_metrics.html.twig" with {'metrics': collector.data.coverageMetrics} %}
     {% endif %}
+
+
 {% endblock %}
