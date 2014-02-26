@@ -15,6 +15,8 @@
         "phpunit/phpunit": "3.7.*"
     },
     "require": {
+        "symfony/framework-bundle": ">=2.1.0",
+        "twig/twig": "1.*",
         "snide/php-scrutinizer-client": "dev-master",
         "guzzle/cache": "3.*",
         "guzzle/plugin": "3.*",

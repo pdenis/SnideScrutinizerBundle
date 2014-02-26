@@ -1,19 +1,28 @@
 <?php
 
+/*
+ * This file is part of the SnideScrutinizerBundle bundle.
+ *
+ * (c) Pascal DENIS <pascal.denis.75@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Snide\Bundle\ScrutinizerBundle\Twig\Extension;
 
 /**
  * Class ScrutinizerExtension
  *
- * @author Pascal DENIS <pascal.denis@businessdecision.com>
+ * @author Pascal DENIS <pascal.denis.75@gmail.com>
  */
 class ScrutinizerExtension extends \Twig_Extension
 {
     const GREEN = 'green';
 
-    const LIGHT_GREEN = 'yellow';
+    const YELLOW = 'yellow';
 
-    const YELLOW = 'silver';
+    const SILVER = 'silver';
 
     const RED = 'red';
 
@@ -42,12 +51,12 @@ class ScrutinizerExtension extends \Twig_Extension
         if($value >= 8) {
             return self::GREEN;
         }else if($value < 8 && $value >= 6) {
-            return self::LIGHT_GREEN;
+            return self::YELLOW;
         }else if($value < 4) {
             return self::RED;
         }
 
-        return self::YELLOW;
+        return self::SILVER;
     }
 
     /**

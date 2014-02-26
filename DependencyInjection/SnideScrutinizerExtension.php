@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the SnideScrutinizerBundle bundle.
+ *
+ * (c) Pascal DENIS <pascal.denis.75@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Snide\Bundle\ScrutinizerBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -61,8 +70,8 @@ class SnideScrutinizerExtension extends Extension
      */
     protected function loadCache($loader, ContainerBuilder $container, array $config)
     {
-        if(isset($config['snide_scrutinizer.filesystem_cache_path'])) {
-            $container->setParameter('snide_scrutinizer.cache_path', $config['snide_scrutinizer.filesystem_cache_path']);
+        if(isset($config['filesystem_cache_path'])) {
+            $container->setParameter('snide_scrutinizer.cache_path', $config['filesystem_cache_path']);
         }
     }
 }
