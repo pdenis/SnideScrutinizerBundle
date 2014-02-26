@@ -41,3 +41,11 @@ snide_scrutinizer:
     filesystem_cache_path: "%kernel.cache_dir%/scrutinizer"
 
 ```
+
+## Overview
+
+### General
+<img src="https://raw.github.com/pdenis/SnideScrutinizerBundle/master/docs/screenshots/general.png" alt="Scrutinizer data">
+
+### Metrics
+<img src="https://raw.github.com/pdenis/SnideScrutinizerBundle/master/docs/screenshots/metrics.png" alt="Scrutinizer Metrics">
