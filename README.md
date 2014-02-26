@@ -23,9 +23,9 @@ If you use composer, add SnideScrutinizerBundle bundle as a dependency to the co
 Add the bundle to your app/AppKernel.php under the dev environment
 ```php
 if (in_array($this->getEnvironment(), array('dev', 'test'))) {
-            ...
-            $bundles[] = new Snide\Bundle\ScrutinizerBundle\SnideScrutinizerBundle();
-        }
+    ...
+    $bundles[] = new Snide\Bundle\ScrutinizerBundle\SnideScrutinizerBundle();
+}
 ```
 
 ## Configuration
