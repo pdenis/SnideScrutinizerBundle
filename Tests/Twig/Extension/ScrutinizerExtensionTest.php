@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the SnideTravinizer bundle.
+ * This file is part of the SnideScrutinizerBundle bundle.
  *
  * (c) Pascal DENIS <pascal.denis.75@gmail.com>
  *
