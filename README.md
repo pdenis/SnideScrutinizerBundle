@@ -3,6 +3,9 @@ SnideScrutinizerBundle
 
 An quick overview of your repository (Symfony 2 Bundle)
 
+[![Build Status](https://travis-ci.org/pdenis/SnideScrutinizerBundle.png?branch=master)](https://travis-ci.org/pdenis/SnideScrutinizerBundle)
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/pdenis/SnideScrutinizerBundle/badges/quality-score.png?s=36b0c70f13ab1bf831afb0bee3a1dac9161dffc4)](https://scrutinizer-ci.com/g/pdenis/SnideScrutinizerBundle/)
+
 # Setup
 -----
 
