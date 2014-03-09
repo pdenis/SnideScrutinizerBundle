@@ -31,6 +31,12 @@ if (in_array($this->getEnvironment(), array('dev', 'test'))) {
 }
 ```
 
+The bundle needs to copy the resources necessary to the web folder. You can use the command below:
+
+```bash
+    php app/console assets:install
+```
+
 ## Configuration
 
 Add the following to your `app/config/config_dev.yml` (you only want to use this in the dev environment)
